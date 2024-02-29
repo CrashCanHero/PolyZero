@@ -1,8 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dfqhs0ua6av64"]
-
-[ext_resource type="Script" path="res://addons/LensFlare/lens_flare.gd" id="2_23qjg"]
-[ext_resource type="Texture2D" uid="uid://b70gv871bi2fp" path="res://addons/LensFlare/lensflare.png" id="3_ce1ly"]
-[ext_resource type="Script" path="res://addons/LensFlare/flare_ghost.gd" id="4_380sh"]
+[gd_scene load_steps=9 format=3 uid="uid://dfqhs0ua6av64"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dyb3r"]
 sky_top_color = Color(0.862745, 0.878431, 0.905882, 1)
@@ -52,56 +48,6 @@ distance_fade_max_distance = 80.0
 radius = 200.0
 height = 400.0
 
-[sub_resource type="Resource" id="Resource_gr5nk"]
-script = ExtResource("4_380sh")
-color = Color(0.909804, 0.980392, 0.901961, 0.184314)
-size = 0.762451
-
-[sub_resource type="Resource" id="Resource_wcilw"]
-script = ExtResource("4_380sh")
-color = Color(0.968627, 0.913725, 0.917647, 0.235294)
-size = 0.747913
-
-[sub_resource type="Resource" id="Resource_r2w32"]
-script = ExtResource("4_380sh")
-color = Color(0.988235, 0.996078, 0.894118, 0.2)
-size = 0.981324
-
-[sub_resource type="Resource" id="Resource_jnmpu"]
-script = ExtResource("4_380sh")
-color = Color(0.988235, 0.941176, 0.941176, 0.184314)
-size = 0.958996
-
-[sub_resource type="Resource" id="Resource_4uqlm"]
-script = ExtResource("4_380sh")
-color = Color(0.956863, 0.847059, 0.952941, 0.219608)
-size = 0.574186
-
-[sub_resource type="Resource" id="Resource_id450"]
-script = ExtResource("4_380sh")
-color = Color(0.898039, 0.831373, 0.952941, 0.192157)
-size = 0.887065
-
-[sub_resource type="Resource" id="Resource_52cwn"]
-script = ExtResource("4_380sh")
-color = Color(0.858824, 0.894118, 0.882353, 0.2)
-size = 0.555659
-
-[sub_resource type="Resource" id="Resource_5ijei"]
-script = ExtResource("4_380sh")
-color = Color(0.85098, 0.847059, 0.823529, 0.227451)
-size = 0.580844
-
-[sub_resource type="Resource" id="Resource_6pjpq"]
-script = ExtResource("4_380sh")
-color = Color(0.980392, 0.886275, 0.894118, 0.184314)
-size = 0.330519
-
-[sub_resource type="Resource" id="Resource_0wbw2"]
-script = ExtResource("4_380sh")
-color = Color(0.878431, 0.92549, 0.835294, 0.231373)
-size = 0.785751
-
 [node name="WorldEnvironment" type="WorldEnvironment"]
 environment = SubResource("Environment_vh0ci")
 
@@ -115,14 +61,6 @@ mesh = SubResource("SphereMesh_grd5l")
 transform = Transform3D(0.874924, -0.298305, 0.381473, -0.0355364, 0.746071, 0.664918, -0.482954, -0.595309, 0.642155, 0, 0, 0)
 
 [node name="Marker" type="Marker3D" parent="SunPivot"]
-
-[node name="LensFlare" type="Node3D" parent="SunPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1000)
-script = ExtResource("2_23qjg")
-lensflare_sprite = ExtResource("3_ce1ly")
-length = 0.3
-size = 5.0
-ghosts = Array[ExtResource("4_380sh")]([SubResource("Resource_gr5nk"), SubResource("Resource_wcilw"), SubResource("Resource_r2w32"), SubResource("Resource_jnmpu"), SubResource("Resource_4uqlm"), SubResource("Resource_id450"), SubResource("Resource_52cwn"), SubResource("Resource_5ijei"), SubResource("Resource_6pjpq"), SubResource("Resource_0wbw2")])
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SunPivot"]
 transform = Transform3D(-0.966331, 0.112553, -0.23138, -0.21695, 0.127069, 0.967877, 0.138338, 0.985487, -0.0983726, 0, 0, 0)
