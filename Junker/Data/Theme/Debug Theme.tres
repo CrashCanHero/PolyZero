@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cmjo6x3xn38si"]
+
+[ext_resource type="StyleBox" uid="uid://c15llbtlkn45h" path="res://Junker/Data/Theme/DefaultStyleBox.tres" id="1_x7xuf"]
+
+[resource]
+LineEdit/styles/focus = ExtResource("1_x7xuf")
+LineEdit/styles/normal = ExtResource("1_x7xuf")
+LineEdit/styles/read_only = ExtResource("1_x7xuf")
+Panel/styles/panel = ExtResource("1_x7xuf")
+PanelContainer/styles/panel = ExtResource("1_x7xuf")

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxgtibg6jawtm"]
+
+[ext_resource type="Texture2D" uid="uid://bxl7odeqat6ly" path="res://Data/Textures/Poly/a_r_m.png" id="1_2toaf"]
+
+[node name="PolyArmSubViewport" type="SubViewport"]
+transparent_bg = true
+size = Vector2i(233, 131)
+render_target_update_mode = 1
+
+[node name="ArmSprite" type="Sprite2D" parent="."]
+position = Vector2(10, 10)
+texture = ExtResource("1_2toaf")
+centered = false

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b03p4l57npqct"]
+
+[ext_resource type="Texture2D" uid="uid://bh75m0jpu2d7y" path="res://Junker/Sprites/TrackerArrow.png" id="1_oyvmq"]
+
+[node name="2D Tracker" type="Node2D"]
+
+[node name="Art" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_oyvmq")
+centered = false
+offset = Vector2(-64, -64)

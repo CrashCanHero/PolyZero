@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://7y6l4gua7n0m"]
+
+[ext_resource type="Script" path="res://Junker/Scripts/Structure/DamageTextRenderer2D.cs" id="1_0x6bg"]
+[ext_resource type="Theme" uid="uid://838ogcvcvd2v" path="res://Junker/Data/Theme/DamageTextTheme.tres" id="2_g2e1j"]
+[ext_resource type="PackedScene" uid="uid://cg3tveafw4mdp" path="res://Junker/Entities/Utility/GenericValueSetter.tscn" id="3_v0a6n"]
+[ext_resource type="Script" path="res://Junker/Scripts/Single Components/Random/RandomOnTimer.cs" id="4_ggxlg"]
+
+[node name="DamageTextRenderer2D" type="Node"]
+script = ExtResource("1_0x6bg")
+LabelTheme = ExtResource("2_g2e1j")
+GravityScale = 0.3
+Combine = true
+
+[node name="XValueSetter" parent="." instance=ExtResource("3_v0a6n")]
+FromPath = NodePath("XRand")
+ToPath = NodePath("..")
+FromProperty = "obj"
+ToProperty = "VelocityX"
+
+[node name="XRand" type="Node" parent="XValueSetter"]
+script = ExtResource("4_ggxlg")
+Playing = true
+Minimum = -50.0
+Maximum = 50.0
+Time = 0.1
+
+[node name="YValueSetter" parent="." instance=ExtResource("3_v0a6n")]
+FromPath = NodePath("YRand")
+ToPath = NodePath("..")
+FromProperty = "obj"
+ToProperty = "VelocityY"
+
+[node name="YRand" type="Node" parent="YValueSetter"]
+script = ExtResource("4_ggxlg")
+Playing = true
+Minimum = -10.0
+Maximum = -30.0
+Time = 0.1

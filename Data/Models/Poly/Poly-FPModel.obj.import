@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cbruc3rrdse3i"
+path="res://.godot/imported/Poly-FPModel.obj-8f5493c3f5f68b81760431a59d9a273a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Poly-FPModel.obj-8f5493c3f5f68b81760431a59d9a273a.mesh"]
+
+source_file="res://Data/Models/Poly/Poly-FPModel.obj"
+dest_files=["res://.godot/imported/Poly-FPModel.obj-8f5493c3f5f68b81760431a59d9a273a.mesh", "res://.godot/imported/Poly-FPModel.obj-8f5493c3f5f68b81760431a59d9a273a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,0 +1,132 @@
+[gd_scene load_steps=22 format=3 uid="uid://dfqhs0ua6av64"]
+
+[ext_resource type="Script" path="res://addons/LensFlare/lens_flare.gd" id="2_23qjg"]
+[ext_resource type="Texture2D" uid="uid://b70gv871bi2fp" path="res://addons/LensFlare/lensflare.png" id="3_ce1ly"]
+[ext_resource type="Script" path="res://addons/LensFlare/flare_ghost.gd" id="4_380sh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dyb3r"]
+sky_top_color = Color(0.862745, 0.878431, 0.905882, 1)
+sky_horizon_color = Color(0.776471, 0.784314, 0.796078, 1)
+sky_curve = 0.0652913
+ground_bottom_color = Color(0.905882, 0.878431, 0.843137, 1)
+ground_horizon_color = Color(0.737255, 0.745098, 0.760784, 1)
+
+[sub_resource type="Sky" id="Sky_xjc0r"]
+sky_material = SubResource("ProceduralSkyMaterial_dyb3r")
+
+[sub_resource type="Environment" id="Environment_vh0ci"]
+background_mode = 2
+sky = SubResource("Sky_xjc0r")
+fog_light_color = Color(0.890196, 0.901961, 0.917647, 1)
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.325
+volumetric_fog_length = 30.0
+
+[sub_resource type="Gradient" id="Gradient_pxrx3"]
+offsets = PackedFloat32Array(0.407572, 0.844098)
+colors = PackedColorArray(0.120485, 0.246121, 0.262628, 0, 0.958219, 0.99052, 0.989642, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bfxgw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cmp6g"]
+seamless = true
+seamless_blend_skirt = 0.04
+color_ramp = SubResource("Gradient_pxrx3")
+noise = SubResource("FastNoiseLite_bfxgw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j2iyj"]
+render_priority = -1
+transparency = 1
+cull_mode = 1
+shading_mode = 0
+specular_mode = 2
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = SubResource("NoiseTexture2D_cmp6g")
+uv1_scale = Vector3(1.425, 1.425, 1.425)
+uv1_offset = Vector3(-0.03, 0.4, 0)
+distance_fade_mode = 2
+distance_fade_max_distance = 80.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_grd5l"]
+radius = 200.0
+height = 400.0
+
+[sub_resource type="Resource" id="Resource_gr5nk"]
+script = ExtResource("4_380sh")
+color = Color(0.909804, 0.980392, 0.901961, 0.184314)
+size = 0.762451
+
+[sub_resource type="Resource" id="Resource_wcilw"]
+script = ExtResource("4_380sh")
+color = Color(0.968627, 0.913725, 0.917647, 0.235294)
+size = 0.747913
+
+[sub_resource type="Resource" id="Resource_r2w32"]
+script = ExtResource("4_380sh")
+color = Color(0.988235, 0.996078, 0.894118, 0.2)
+size = 0.981324
+
+[sub_resource type="Resource" id="Resource_jnmpu"]
+script = ExtResource("4_380sh")
+color = Color(0.988235, 0.941176, 0.941176, 0.184314)
+size = 0.958996
+
+[sub_resource type="Resource" id="Resource_4uqlm"]
+script = ExtResource("4_380sh")
+color = Color(0.956863, 0.847059, 0.952941, 0.219608)
+size = 0.574186
+
+[sub_resource type="Resource" id="Resource_id450"]
+script = ExtResource("4_380sh")
+color = Color(0.898039, 0.831373, 0.952941, 0.192157)
+size = 0.887065
+
+[sub_resource type="Resource" id="Resource_52cwn"]
+script = ExtResource("4_380sh")
+color = Color(0.858824, 0.894118, 0.882353, 0.2)
+size = 0.555659
+
+[sub_resource type="Resource" id="Resource_5ijei"]
+script = ExtResource("4_380sh")
+color = Color(0.85098, 0.847059, 0.823529, 0.227451)
+size = 0.580844
+
+[sub_resource type="Resource" id="Resource_6pjpq"]
+script = ExtResource("4_380sh")
+color = Color(0.980392, 0.886275, 0.894118, 0.184314)
+size = 0.330519
+
+[sub_resource type="Resource" id="Resource_0wbw2"]
+script = ExtResource("4_380sh")
+color = Color(0.878431, 0.92549, 0.835294, 0.231373)
+size = 0.785751
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_vh0ci")
+
+[node name="Clouds" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, -8.74228e-07, -20, 0, 20, -8.74228e-07, 0, -1000, 0)
+material_override = SubResource("StandardMaterial3D_j2iyj")
+transparency = 0.8
+mesh = SubResource("SphereMesh_grd5l")
+
+[node name="SunPivot" type="Node3D" parent="."]
+transform = Transform3D(0.874924, -0.298305, 0.381473, -0.0355364, 0.746071, 0.664918, -0.482954, -0.595309, 0.642155, 0, 0, 0)
+
+[node name="Marker" type="Marker3D" parent="SunPivot"]
+
+[node name="LensFlare" type="Node3D" parent="SunPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1000)
+script = ExtResource("2_23qjg")
+lensflare_sprite = ExtResource("3_ce1ly")
+length = 0.3
+size = 5.0
+ghosts = Array[ExtResource("4_380sh")]([SubResource("Resource_gr5nk"), SubResource("Resource_wcilw"), SubResource("Resource_r2w32"), SubResource("Resource_jnmpu"), SubResource("Resource_4uqlm"), SubResource("Resource_id450"), SubResource("Resource_52cwn"), SubResource("Resource_5ijei"), SubResource("Resource_6pjpq"), SubResource("Resource_0wbw2")])
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SunPivot"]
+transform = Transform3D(-0.966331, 0.112553, -0.23138, -0.21695, 0.127069, 0.967877, 0.138338, 0.985487, -0.0983726, 0, 0, 0)
+shadow_enabled = true
+shadow_opacity = 0.97
+shadow_blur = 0.0
+directional_shadow_blend_splits = true

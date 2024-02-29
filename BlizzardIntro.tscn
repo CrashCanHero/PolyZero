@@ -1,0 +1,463 @@
+[gd_scene load_steps=60 format=3 uid="uid://pkvqtppnhfch"]
+
+[ext_resource type="Texture2D" uid="uid://bok08os2847l" path="res://Data/Textures/Snow/Snow-A.tres" id="1_mcv0v"]
+[ext_resource type="Texture2D" uid="uid://hd4sbcnuys7l" path="res://Data/Textures/Snow/Snow-N.tres" id="2_7q2pa"]
+[ext_resource type="PackedScene" uid="uid://dfqhs0ua6av64" path="res://Data/Skybox.tscn" id="2_bi6oy"]
+[ext_resource type="Shader" uid="uid://d3pu8ycpo6535" path="res://Shaders/SnowTopped.tres" id="3_ydis8"]
+[ext_resource type="Texture2D" uid="uid://c784odvwyy0hj" path="res://Data/Textures/Snow/SnowNoise.tres" id="4_a0e24"]
+[ext_resource type="Texture2D" uid="uid://cx6wgp0apnysx" path="res://Data/Textures/Snow/SnowCap-A.png" id="4_b6j8h"]
+[ext_resource type="Texture2D" uid="uid://bbw58rvbhw8sb" path="res://Tests/Sprites/CubeSheet.png" id="4_t7fxt"]
+[ext_resource type="Texture2D" uid="uid://bvvy6n1lms5ti" path="res://Data/Textures/Snow/SnowWarpGradient.tres" id="5_0owvp"]
+[ext_resource type="Script" path="res://addons/extras_sprites/scripts/sprite_3D_billboard.gd" id="6_cc8t6"]
+[ext_resource type="Script" path="res://Junker/Scripts/Single Components/Comment.cs" id="6_y22je"]
+[ext_resource type="Script" path="res://addons/extras_sprites/scripts/animatio_data.gd" id="7_3b0w2"]
+[ext_resource type="PackedScene" uid="uid://dnjvho2l7t7c7" path="res://Data/SnowParticles.tscn" id="9_3sxnc"]
+[ext_resource type="PackedScene" uid="uid://c8mmmqw3xhhlo" path="res://Prefabs/Paths/PathBase.tscn" id="12_h6fh0"]
+[ext_resource type="Shader" uid="uid://inmtl5m8nkk7" path="res://Shaders/SnowPathwayOverlay.tres" id="13_pneof"]
+[ext_resource type="PackedScene" uid="uid://dku248kkchejr" path="res://Prefabs/Poly/Poly.tscn" id="15_ebt0i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yb7ol"]
+specular_mode = 2
+albedo_texture = ExtResource("1_mcv0v")
+normal_enabled = true
+normal_texture = ExtResource("2_7q2pa")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qnv22"]
+material = SubResource("StandardMaterial3D_yb7ol")
+size = Vector2(300, 300)
+
+[sub_resource type="Gradient" id="Gradient_odalt"]
+colors = PackedColorArray(0.138976, 0.0967164, 0.0067424, 1, 0.196251, 0.16022, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1n8l7"]
+frequency = 0.0073
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fjq2g"]
+seamless = true
+seamless_blend_skirt = 0.296
+color_ramp = SubResource("Gradient_odalt")
+noise = SubResource("FastNoiseLite_1n8l7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fe8k7"]
+shading_mode = 2
+specular_mode = 2
+albedo_texture = SubResource("NoiseTexture2D_fjq2g")
+uv1_scale = Vector3(0.06, 0.435, 0.08)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 1.07177
+uv1_world_triplanar = true
+distance_fade_mode = 2
+distance_fade_min_distance = 70.0
+distance_fade_max_distance = 20.0
+
+[sub_resource type="Gradient" id="Gradient_gmorj"]
+offsets = PackedFloat32Array(0.832962, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aiiop"]
+gradient = SubResource("Gradient_gmorj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n8owt"]
+render_priority = 0
+shader = ExtResource("3_ydis8")
+shader_parameter/Repeat_Scale = Vector2(0.98, 15)
+shader_parameter/Scale = 2.0
+shader_parameter/Offset = Vector2(-0.5, -0.5)
+shader_parameter/Rotation = null
+shader_parameter/Warp_Gradient = ExtResource("5_0owvp")
+shader_parameter/Snow_Cap_Noise_Texture = ExtResource("4_a0e24")
+shader_parameter/Snow_Cap_Texture = ExtResource("4_b6j8h")
+shader_parameter/Cap_Gradient = SubResource("GradientTexture1D_aiiop")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xrktj"]
+top_radius = 24.8
+bottom_radius = 25.0
+height = 0.2
+radial_segments = 16
+rings = 1
+
+[sub_resource type="Gradient" id="Gradient_d8veh"]
+offsets = PackedFloat32Array(0, 0.567929, 0.868597, 0.895323, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.573312, 0.573312, 0.573312, 1, 0.923256, 0.923256, 0.923256, 1, 0.955405, 0.955405, 0.955405, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hqycy"]
+gradient = SubResource("Gradient_d8veh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jncck"]
+render_priority = 0
+shader = ExtResource("3_ydis8")
+shader_parameter/Repeat_Scale = Vector2(1, 10)
+shader_parameter/Scale = 1.875
+shader_parameter/Offset = Vector2(-0.455, -0.44)
+shader_parameter/Rotation = null
+shader_parameter/Warp_Gradient = SubResource("GradientTexture1D_hqycy")
+shader_parameter/Snow_Cap_Texture = ExtResource("4_b6j8h")
+shader_parameter/Cap_Gradient = SubResource("GradientTexture1D_aiiop")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_skt5w"]
+top_radius = 5.8
+bottom_radius = 6.0
+height = 0.8
+radial_segments = 16
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j6rm7"]
+top_radius = 2.8
+bottom_radius = 3.0
+height = 1.6
+radial_segments = 16
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7b6ud"]
+top_radius = 1.3
+bottom_radius = 1.5
+height = 3.2
+radial_segments = 16
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gsyny"]
+top_radius = 0.77
+bottom_radius = 1.105
+height = 6.4
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_26570"]
+top_radius = 0.35
+bottom_radius = 0.595
+height = 12.8
+radial_segments = 4
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fmfe2"]
+top_radius = 0.165
+bottom_radius = 0.27
+height = 12.8
+radial_segments = 4
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vl3lm"]
+size = Vector3(300, 1, 300)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1oeqd"]
+size = Vector3(300, 1, 300)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vx2lo"]
+size = Vector3(300, 1, 300)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_08vjc"]
+size = Vector3(300, 1, 300)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_purm0"]
+size = Vector3(300, 1, 300)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rcpva"]
+height = 0.236676
+radius = 24.7696
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j2vxq"]
+height = 1.86107
+radius = 17.3149
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_u7jeq"]
+height = 1.86107
+radius = 13.1124
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_oo7ax"]
+height = 15.7267
+radius = 6.86022
+
+[sub_resource type="Shader" id="Shader_fwimr"]
+code = "shader_type spatial;
+render_mode diffuse_lambert_wrap,cull_disabled;
+
+uniform float rows:hint_range(1.0, 100.0, 1) = 1;
+uniform float columns:hint_range(1.0, 100.0, 1) = 1;
+uniform float frame:hint_range(0.0, 100.0, 1) = 0;
+uniform bool invert_rows_columns = false;
+uniform sampler2D sprite:filter_nearest_mipmap;
+uniform int mode:hint_range(0, 1, 1) = 1;
+varying vec3 look_dir;
+
+
+float billboard_mode_a(vec3 CAMERA_POSITION,vec3 NODE_POSITION, mat4 MODEL_MAT,float directions){
+	vec3 direction_to_camera = normalize(CAMERA_POSITION-NODE_POSITION);
+	float angle_to_camera = atan(direction_to_camera.x,direction_to_camera.z);
+	vec4 model_direction = MODEL_MAT*vec4(1.0,0.0,0.0,0.0);
+	float y_angle = atan(model_direction.x,model_direction.z)-PI/2.0;
+	float final_angle = angle_to_camera-y_angle;
+	float int_y_angle = round((final_angle / TAU) * float(directions)) / float(directions);
+	return int_y_angle;
+}
+float billboard_mobe_b(vec3 CAMERA_POSITION,mat4 MODEL_MAT,mat4 VIEW_MAT,float directions,int ret){
+	
+    vec3 ray_origin = CAMERA_POSITION;
+      
+    vec3 object_origin = (MODEL_MAT * vec4(0.0,0.0,0.0,1.0)).xyz;
+    vec3 cam_dir = object_origin - ray_origin;
+    cam_dir = normalize((VIEW_MAT * vec4(cam_dir, 0.0)).xyz);
+
+    float angle = 180.0 - degrees(acos(dot(normalize(cam_dir.xz), normalize(look_dir.xz))));
+    float _direction = round(angle/180.0 * directions);
+
+    float flip = sign((look_dir.x * cam_dir.z) - (look_dir.z * cam_dir.x));
+	
+    flip = mix(flip, 1.0, max(step(_direction, 0.0), step(directions, _direction)));
+	float retu = ret == 0 ? _direction : flip;
+	return retu ;
+}
+void vertex() {
+		 MODELVIEW_MATRIX = VIEW_MATRIX * mat4(vec4(normalize(cross(vec3(0.0, 1.0, 0.0), INV_VIEW_MATRIX[2].xyz)), 0.0), vec4(0.0, 1.0, 0.0, 0.0), vec4(normalize(cross(INV_VIEW_MATRIX[0].xyz, vec3(0.0, 1.0, 0.0))), 0.0), MODEL_MATRIX[3]);
+		look_dir = MODELVIEW_NORMAL_MATRIX * NORMAL;
+		MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+	switch (mode){
+		case 0:
+			float y = invert_rows_columns == true ? billboard_mode_a(CAMERA_POSITION_WORLD,NODE_POSITION_WORLD,MODEL_MATRIX,rows) : billboard_mode_a(CAMERA_POSITION_WORLD,NODE_POSITION_WORLD,MODEL_MATRIX,columns);
+			float x = invert_rows_columns == true ? frame/columns:frame/rows;
+			UV /= vec2(rows,columns);
+			UV += invert_rows_columns == true ?vec2(y,x):vec2(x,y);
+			break;	
+		case 1:
+			float x = invert_rows_columns == true ? frame/columns:frame/rows;
+			float y = billboard_mobe_b(CAMERA_POSITION_WORLD,MODEL_MATRIX,VIEW_MATRIX,rows,0);
+			float f = billboard_mobe_b(CAMERA_POSITION_WORLD,MODEL_MATRIX,VIEW_MATRIX,rows,1);
+			if (invert_rows_columns){
+				y = billboard_mobe_b(CAMERA_POSITION_WORLD,MODEL_MATRIX,VIEW_MATRIX,columns,0);
+				f = billboard_mobe_b(CAMERA_POSITION_WORLD,MODEL_MATRIX,VIEW_MATRIX,columns,1);
+			}
+			UV.y += invert_rows_columns == true ? x:y;
+			UV /=vec2(rows,columns);
+			UV.x +=  invert_rows_columns == true ? y : x;
+			UV *= invert_rows_columns == true ? vec2(1.0,f):vec2(f,1.0);
+			break;
+	};
+}	
+
+void fragment() {
+	vec4 sprite_texture;
+	sprite_texture = texture(sprite,UV);
+	ALBEDO = sprite_texture.rgb;
+	ALPHA = sprite_texture.a;
+}
+
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iep8f"]
+render_priority = 0
+shader = SubResource("Shader_fwimr")
+shader_parameter/rows = 8.0
+shader_parameter/columns = 5.0
+shader_parameter/frame = 0.0
+shader_parameter/invert_rows_columns = true
+shader_parameter/mode = 0
+shader_parameter/sprite = ExtResource("4_t7fxt")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ss8x3"]
+material = SubResource("ShaderMaterial_iep8f")
+size = Vector2(2.56, 2.56)
+orientation = 2
+
+[sub_resource type="Resource" id="Resource_sdygg"]
+script = ExtResource("7_3b0w2")
+name = "idle"
+sprite = ExtResource("4_t7fxt")
+rows = 8.0
+columns = 5.0
+invert_rows_columns = true
+mode = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3sei1"]
+size = Vector3(1.3, 1.3, 1.3)
+
+[sub_resource type="Curve3D" id="Curve3D_6r8v1"]
+_data = {
+"points": PackedVector3Array(-0.855051, -0.40046, -0.876606, 0.855051, 0.40046, 0.876606, 6.382, 0.1, 17.54, 0.479969, 0.0744648, 2.55559, -0.38, -0.169, -2.022, 9.527, 0.069, 4.908, 0.981258, -0.204174, 1.45383, -0.981258, 0.204174, -1.45383, 2.548, -0.025, -13.031, -1.24113, 0.0346117, -1.47726, 1.24113, -0.0346117, 1.47726, -5.78687, 0.0905263, -25.1624, 1.68781, 0.0928632, -0.146137, -1.68781, -0.0928632, 0.146137, -27.982, 0.044, -32.242, 2.58151, -0.368257, -2.13397, 0, 0, 0, -48.684, 0.124, -24.493, 1.59359, 0.00168754, -3.06646, 0, 0, 0, -55.071, 0.161, -12.807, 1.31958, 0.00315783, -4.97632, 0, 0, 0, -61.034, 0.099, 1.661, -1.92585, 0.445549, -6.38008, 0, 0, 0, -58.886, 0.043, 15.129, 0, 0, 0, 0, 0, 0, -45.071, 0.052, 26.956, -4.31439, 0.00104231, 0.126537, 0, 0, 0, -22.445, 0.162, 31.094, -4.60329, -0.20631, 2.63443, 1.02248, 0.0458253, -0.585155, -3.826, 0.117, 25.558),
+"tilts": PackedFloat32Array(-0.953, 0.556, 0.437264, 0.717911, 0.0817264, 0.92318, 0.934845, 0.986163, 1.03821, 1.067, 0.967997, 0.159694)
+}
+point_count = 12
+up_vector_enabled = false
+
+[sub_resource type="Gradient" id="Gradient_is22k"]
+colors = PackedColorArray(0.223867, 0.18847, 0.069046, 1, 0.267068, 0.202408, 0.0377035, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tt65c"]
+frequency = 0.0642
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0as8l"]
+color_ramp = SubResource("Gradient_is22k")
+noise = SubResource("FastNoiseLite_tt65c")
+
+[sub_resource type="Gradient" id="Gradient_ki8au"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cpusj"]
+as_normal_map = true
+color_ramp = SubResource("Gradient_ki8au")
+noise = SubResource("FastNoiseLite_tt65c")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vdt3i"]
+albedo_texture = SubResource("NoiseTexture2D_0as8l")
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_cpusj")
+uv1_scale = Vector3(0.05, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_5vu1i"]
+colors = PackedColorArray(0.807304, 0.887451, 0.89832, 1, 0.94881, 0.958268, 0.959247, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bkxuu"]
+frequency = 0.0224
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2jgsa"]
+seamless = true
+color_ramp = SubResource("Gradient_5vu1i")
+noise = SubResource("FastNoiseLite_bkxuu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kcss0"]
+render_priority = 0
+shader = ExtResource("13_pneof")
+shader_parameter/Scale = Vector2(0.175, 4)
+shader_parameter/Offset = Vector2(0, -0.725)
+shader_parameter/Snow_Noise_Texture = SubResource("NoiseTexture2D_2jgsa")
+shader_parameter/Snow_Texture = ExtResource("4_b6j8h")
+
+[node name="PawnTest" type="Node"]
+
+[node name="Visual" type="Node" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="Visual"]
+mesh = SubResource("PlaneMesh_qnv22")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Visual/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -26.0101, 0)
+size = Vector3(300, 52.0203, 300)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.921, 0.0867429, 0.215271)
+material_override = SubResource("StandardMaterial3D_fe8k7")
+material_overlay = SubResource("ShaderMaterial_n8owt")
+mesh = SubResource("CylinderMesh_xrktj")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Visual/MeshInstance3D"]
+transform = Transform3D(2.89006, 0, 0, 0, 1, 0, 0, 0, 2.91627, 0.0790901, 0.24398, 0.258566)
+material_override = SubResource("StandardMaterial3D_fe8k7")
+material_overlay = SubResource("ShaderMaterial_jncck")
+mesh = SubResource("CylinderMesh_skt5w")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Visual/MeshInstance3D/MeshInstance3D3"]
+transform = Transform3D(1.6, 0, 0, 0, 1, 0, 0, 0, 1.6, 0.632846, 0.406803, 0.671769)
+material_override = SubResource("StandardMaterial3D_fe8k7")
+material_overlay = SubResource("ShaderMaterial_jncck")
+mesh = SubResource("CylinderMesh_j6rm7")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Visual/MeshInstance3D/MeshInstance3D3/MeshInstance3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.295235, 2.36318, -0.0612373)
+material_override = SubResource("StandardMaterial3D_fe8k7")
+mesh = SubResource("CylinderMesh_7b6ud")
+skeleton = NodePath("../../../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Visual/MeshInstance3D/MeshInstance3D3/MeshInstance3D4/MeshInstance3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7209, 0)
+material_override = SubResource("StandardMaterial3D_fe8k7")
+mesh = SubResource("CylinderMesh_gsyny")
+skeleton = NodePath("../../../../..")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Visual/MeshInstance3D/MeshInstance3D3/MeshInstance3D4/MeshInstance3D5/MeshInstance3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0364685, 9.56997, 0.0154774)
+material_override = SubResource("StandardMaterial3D_fe8k7")
+mesh = SubResource("CylinderMesh_26570")
+skeleton = NodePath("../../../../../..")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Visual/MeshInstance3D/MeshInstance3D3/MeshInstance3D4/MeshInstance3D5/MeshInstance3D6/MeshInstance3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.6657, 0)
+material_override = SubResource("StandardMaterial3D_fe8k7")
+mesh = SubResource("CylinderMesh_fmfe2")
+skeleton = NodePath("../../../../../../..")
+
+[node name="Collision" type="Node" parent="."]
+
+[node name="WorldCollision" type="StaticBody3D" parent="Collision"]
+collision_mask = 0
+
+[node name="Floor" type="CollisionShape3D" parent="Collision/WorldCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_vl3lm")
+
+[node name="WestWall" type="CollisionShape3D" parent="Collision/WorldCollision"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -150.5)
+shape = SubResource("BoxShape3D_1oeqd")
+
+[node name="EastWall" type="CollisionShape3D" parent="Collision/WorldCollision"]
+transform = Transform3D(-1, 8.74228e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -1, 4.37114e-08, 0, 0, 150.5)
+shape = SubResource("BoxShape3D_vx2lo")
+
+[node name="NorthWall" type="CollisionShape3D" parent="Collision/WorldCollision"]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 150.5, 0, 0)
+shape = SubResource("BoxShape3D_08vjc")
+
+[node name="SouthWall" type="CollisionShape3D" parent="Collision/WorldCollision"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -150.5, 0, 0)
+shape = SubResource("BoxShape3D_purm0")
+
+[node name="StackMountain" type="StaticBody3D" parent="Collision"]
+collision_mask = 0
+
+[node name="Floor2" type="CollisionShape3D" parent="Collision/StackMountain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.921, 0.0867429, 0.215271)
+shape = SubResource("CylinderShape3D_rcpva")
+
+[node name="Floor3" type="CollisionShape3D" parent="Collision/StackMountain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.3842, -0.199999, 0.475936)
+shape = SubResource("CylinderShape3D_j2vxq")
+
+[node name="Floor4" type="CollisionShape3D" parent="Collision/StackMountain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.5676, 0.676721, 1.45506)
+shape = SubResource("CylinderShape3D_u7jeq")
+
+[node name="Floor5" type="CollisionShape3D" parent="Collision/StackMountain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3864, 0.676721, 2.10525)
+shape = SubResource("CylinderShape3D_oo7ax")
+
+[node name="Sprite3DBillBoard" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.701668, 0)
+visible = false
+mesh = SubResource("PlaneMesh_ss8x3")
+script = ExtResource("6_cc8t6")
+animations_array = Array[ExtResource("7_3b0w2")]([SubResource("Resource_sdygg")])
+animation = 0
+frame = 2.0
+sprite_scale = 0.04
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Sprite3DBillBoard"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sprite3DBillBoard/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0463183, 0)
+shape = SubResource("BoxShape3D_3sei1")
+disabled = true
+
+[node name="README" type="Node" parent="Sprite3DBillBoard"]
+script = ExtResource("6_y22je")
+Text = "Frame = Up/Down Direction, Render frames individually as sheets and swap them when needed."
+
+[node name="Test Path" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0960939, -0.0235293, -0.0757632)
+curve = SubResource("Curve3D_6r8v1")
+
+[node name="PathBase" parent="Test Path" instance=ExtResource("12_h6fh0")]
+material_override = SubResource("StandardMaterial3D_vdt3i")
+material_overlay = SubResource("ShaderMaterial_kcss0")
+use_collision = true
+collision_mask = 0
+path_node = NodePath("..")
+path_interval_type = 1
+path_interval = 0.75
+path_joined = true
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("2_bi6oy")]
+
+[node name="GPUParticles3D" parent="." instance=ExtResource("9_3sxnc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.185246, 11, 8.65978)
+
+[node name="Pawn" parent="." instance=ExtResource("15_ebt0i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.187926, 1.12029, 4.16332)

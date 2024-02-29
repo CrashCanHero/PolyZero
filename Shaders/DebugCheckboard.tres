@@ -1,0 +1,83 @@
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://b03ai7vmvi15l"]
+
+[ext_resource type="Script" path="res://addons/ShaderLib/Procedural/CheckerBoard.gd" id="1_ukcin"]
+
+[sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_1ebed"]
+output_port_for_preview = 0
+default_input_values = [1, Vector3(1, 1, 1), 2, Vector3(0.4, 0.4, 0.4), 3, Vector2(1, 1)]
+initialized = true
+script = ExtResource("1_ukcin")
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_j8lyt"]
+parameter_name = "Size"
+default_value_enabled = true
+default_value = Vector2(1, 1)
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_s1awm"]
+parameter_name = "Color1"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_hor0g"]
+parameter_name = "Color2"
+default_value_enabled = true
+default_value = Color(0, 0, 0, 1)
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform vec4 Color1 : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+uniform vec4 Color2 : source_color = vec4(0.000000, 0.000000, 0.000000, 1.000000);
+uniform vec2 Size = vec2(1.000000, 1.000000);
+
+
+// CheckerBoard
+vec3 checker_board(vec2 uv, vec3 color_a, vec3 color_b, vec2 frequency){
+	uv = (uv.xy + 0.5) * frequency;
+	vec4 _derivatives = vec4(dFdx(uv), dFdy(uv));
+	vec2 _duv_length = sqrt(vec2(dot(_derivatives.xz, _derivatives.xz), dot(_derivatives.yw, _derivatives.yw)));
+	float _width = 1.0;
+	vec2 _distance3 = 4.0 * abs(fract(uv + 0.25) - 0.5) - _width;
+	vec2 _scale = 0.35 / _duv_length.xy;
+	float _frequency_limiter = sqrt(clamp(1.1f - max(_duv_length.x, _duv_length.y), 0.0, 1.0));
+	vec2 _vector_alpha = clamp(_distance3 * _scale.xy, -1.0, 1.0);
+	float _alpha = clamp(0.5f + 0.5f * _vector_alpha.x * _vector_alpha.y * _frequency_limiter, 0.0, 1.0);
+	return mix(color_b, color_a, _alpha);
+}
+
+void fragment() {
+// ColorParameter:4
+	vec4 n_out4p0 = Color1;
+
+
+// ColorParameter:5
+	vec4 n_out5p0 = Color2;
+
+
+// Vector2Parameter:3
+	vec2 n_out3p0 = Size;
+
+
+	vec3 n_out2p0;
+// CheckerBoard:2
+	{
+		n_out2p0 = checker_board(UV, vec3(n_out4p0.xyz), vec3(n_out5p0.xyz), n_out3p0);
+	}
+
+
+// Output:0
+	ALBEDO = n_out2p0;
+
+
+}
+"
+nodes/fragment/0/position = Vector2(240, 180)
+nodes/fragment/2/node = SubResource("VisualShaderNodeCustom_1ebed")
+nodes/fragment/2/position = Vector2(-20, 180)
+nodes/fragment/3/node = SubResource("VisualShaderNodeVec2Parameter_j8lyt")
+nodes/fragment/3/position = Vector2(-740, 440)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorParameter_s1awm")
+nodes/fragment/4/position = Vector2(-740, -40)
+nodes/fragment/5/node = SubResource("VisualShaderNodeColorParameter_hor0g")
+nodes/fragment/5/position = Vector2(-740, 200)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 3, 0, 2, 3, 4, 0, 2, 1, 5, 0, 2, 2)

@@ -1,0 +1,122 @@
+[gd_scene load_steps=20 format=3 uid="uid://wqmcdfproj7e"]
+
+[ext_resource type="Script" path="res://Junker/Scripts/Debug/JunkerDebugConsole.cs" id="1_ofyfl"]
+[ext_resource type="PackedScene" uid="uid://b03p4l57npqct" path="res://Junker/Entities/Debug/TrackerArrow.tscn" id="2_7frxr"]
+[ext_resource type="Theme" uid="uid://cmjo6x3xn38si" path="res://Junker/Data/Theme/Debug Theme.tres" id="2_7350b"]
+[ext_resource type="Script" path="res://Junker/Scripts/Debug/Commands/ShowNamesCommand.cs" id="4_k7lj0"]
+[ext_resource type="Script" path="res://Junker/Scripts/Debug/Commands/SetVerboseCommand.cs" id="5_2o6s6"]
+[ext_resource type="Script" path="res://Junker/Scripts/Debug/Commands/SetContextCommand.cs" id="5_80sol"]
+[ext_resource type="Script" path="res://Junker/Scripts/Single Components/Tags/TagSystem.cs" id="6_e8mpg"]
+[ext_resource type="Script" path="res://Junker/Scripts/Debug/Commands/Scale2DCommand.cs" id="6_m0ra1"]
+[ext_resource type="Script" path="res://Junker/Scripts/Debug/Commands/Rotate2DCommand.cs" id="7_nqt7j"]
+[ext_resource type="Script" path="res://Junker/Scripts/Debug/Commands/Move2DCommand.cs" id="7_r0vpd"]
+[ext_resource type="Script" path="res://Junker/Scripts/Single Components/Tags/JunkTag.cs" id="7_rmah5"]
+[ext_resource type="Script" path="res://Junker/Scripts/Debug/Commands/Track2DCommand.cs" id="8_re1q4"]
+
+[sub_resource type="Resource" id="Resource_7vyjn"]
+script = ExtResource("4_k7lj0")
+CommandKey = "shownames"
+HelpString = "Shows the names of all nodes. Syntax: shownames NameLevel[0=Hidden,1=Shown,2=FullPaths]"
+
+[sub_resource type="Resource" id="Resource_rj62s"]
+script = ExtResource("5_2o6s6")
+CommandKey = "setverbose"
+HelpString = "Sets the Verbose Level of the console. Syntax: setverbose VerboseLevel[0=False,1=True]"
+
+[sub_resource type="Resource" id="Resource_eh4rc"]
+script = ExtResource("7_r0vpd")
+CommandKey = "move2d"
+HelpString = "Moves the given node to the specified position. Syntax: move2d Path/To/Node X Y (Putting a ~ for X or Y means to use that nodes position)"
+
+[sub_resource type="Resource" id="Resource_f8m18"]
+script = ExtResource("5_80sol")
+CommandKey = "setcontext"
+HelpString = "Sets the Console Node Context. Syntax: setcontext Path/To/Context/Node"
+
+[sub_resource type="Resource" id="Resource_ol6tc"]
+script = ExtResource("6_m0ra1")
+CommandKey = "scale2d"
+HelpString = "Sets the context node's scale to the specified scale. Syntax: scaled2d scaleX scaleY"
+
+[sub_resource type="Resource" id="Resource_b7t3v"]
+script = ExtResource("7_nqt7j")
+CommandKey = "rot2d"
+HelpString = "Sets thje context node's rotation. Syntax: rot2d rotation"
+
+[sub_resource type="Resource" id="Resource_p0a3u"]
+script = ExtResource("8_re1q4")
+CommandKey = "track2d"
+HelpString = "sets the tracking on the current context node. Syntax: track2d tracking[0=False,1=True]"
+
+[node name="Junker Console" type="Control" node_paths=PackedStringArray("CommandLine", "Output")]
+z_index = 4096
+custom_minimum_size = Vector2(1152, 648)
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -648.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 3
+script = ExtResource("1_ofyfl")
+CommandLine = NodePath("MarginContainer/VBoxContainer/LineEdit")
+Output = NodePath("MarginContainer/VBoxContainer/PanelContainer/MarginContainer/Label")
+TrackerArrow = ExtResource("2_7frxr")
+Keys = Array[Object]([SubResource("Resource_7vyjn"), SubResource("Resource_rj62s"), SubResource("Resource_eh4rc"), SubResource("Resource_f8m18"), SubResource("Resource_ol6tc"), SubResource("Resource_b7t3v"), SubResource("Resource_p0a3u")])
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -648.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 580)
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("2_7350b")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_7350b")
+placeholder_text = "Type command, hit enter..."
+virtual_keyboard_enabled = false
+
+[node name="TagSystem" type="Node" parent="."]
+script = ExtResource("6_e8mpg")
+
+[node name="VerboseMode" type="Node" parent="TagSystem"]
+script = ExtResource("7_rmah5")
+
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/LineEdit" to="." method="OnCommandEnter"]

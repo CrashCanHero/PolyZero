@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg3tveafw4mdp"]
+
+[ext_resource type="Script" path="res://Junker/Scripts/Single Components/GenericValueSetter.cs" id="1_l5cm3"]
+[ext_resource type="Script" path="res://Junker/Scripts/Single Components/GenericPropertyHandler.cs" id="2_d82cc"]
+
+[node name="GenericValueSetter" type="Node"]
+script = ExtResource("1_l5cm3")
+
+[node name="Getter" type="Node" parent="."]
+script = ExtResource("2_d82cc")
+CanSet = false
+
+[node name="Setter" type="Node" parent="."]
+script = ExtResource("2_d82cc")
+CanGet = false
