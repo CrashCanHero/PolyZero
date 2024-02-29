@@ -167,7 +167,7 @@ radius = 13.1124
 height = 15.7267
 radius = 6.86022
 
-[sub_resource type="Shader" id="Shader_fwimr"]
+[sub_resource type="Shader" id="Shader_nowy0"]
 code = "shader_type spatial;
 render_mode diffuse_lambert_wrap,cull_disabled;
 
@@ -242,9 +242,9 @@ void fragment() {
 
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iep8f"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ij67d"]
 render_priority = 0
-shader = SubResource("Shader_fwimr")
+shader = SubResource("Shader_nowy0")
 shader_parameter/rows = 8.0
 shader_parameter/columns = 5.0
 shader_parameter/frame = 0.0
@@ -252,12 +252,12 @@ shader_parameter/invert_rows_columns = true
 shader_parameter/mode = 0
 shader_parameter/sprite = ExtResource("4_t7fxt")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ss8x3"]
-material = SubResource("ShaderMaterial_iep8f")
+[sub_resource type="PlaneMesh" id="PlaneMesh_efyk2"]
+material = SubResource("ShaderMaterial_ij67d")
 size = Vector2(2.56, 2.56)
 orientation = 2
 
-[sub_resource type="Resource" id="Resource_sdygg"]
+[sub_resource type="Resource" id="Resource_yhajw"]
 script = ExtResource("7_3b0w2")
 name = "idle"
 sprite = ExtResource("4_t7fxt")
@@ -422,9 +422,9 @@ shape = SubResource("CylinderShape3D_oo7ax")
 [node name="Sprite3DBillBoard" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.701668, 0)
 visible = false
-mesh = SubResource("PlaneMesh_ss8x3")
+mesh = SubResource("PlaneMesh_efyk2")
 script = ExtResource("6_cc8t6")
-animations_array = Array[ExtResource("7_3b0w2")]([SubResource("Resource_sdygg")])
+animations_array = Array[ExtResource("7_3b0w2")]([SubResource("Resource_yhajw")])
 animation = 0
 frame = 2.0
 sprite_scale = 0.04

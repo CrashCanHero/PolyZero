@@ -18,6 +18,7 @@ public partial class PolyArmOrientationController : Node3D {
 
         Vector3 posDelta = GlobalPosition - lastPos;
         posDelta = posDelta.Normalized();
+        
 
         if (posDelta.Length() <= 0f) {
             return;
