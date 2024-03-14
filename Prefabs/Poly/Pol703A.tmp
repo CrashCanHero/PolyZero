@@ -1,0 +1,161 @@
+[gd_scene load_steps=13 format=3 uid="uid://dku248kkchejr"]
+
+[ext_resource type="PackedScene" uid="uid://bk1exu1p74wrs" path="res://addons/GoldGdt/Pawn.tscn" id="1_0qeqv"]
+[ext_resource type="PackedScene" uid="uid://bbnt5okr6d0tx" path="res://Prefabs/Poly/PolyArm.tscn" id="2_4jiit"]
+[ext_resource type="PackedScene" uid="uid://bxgtibg6jawtm" path="res://Prefabs/Poly/PolyArm-FP.tscn" id="2_anlu3"]
+[ext_resource type="ArrayMesh" uid="uid://cbruc3rrdse3i" path="res://Data/Models/Poly/Poly-FPModel.obj" id="2_yk0cc"]
+[ext_resource type="Script" path="res://Data/Scripts/Poly/PolyArmController.cs" id="3_5q7kc"]
+[ext_resource type="Resource" uid="uid://c770d2068in3p" path="res://addons/GoldGdt/Default.tres" id="4_k3p4j"]
+[ext_resource type="Script" path="res://Data/Scripts/Poly/PolyArmMovementData.cs" id="4_u0ege"]
+[ext_resource type="Script" path="res://Data/Scripts/Poly/PolyArmAttackController.cs" id="6_lk36t"]
+[ext_resource type="Script" path="res://Junker/Scripts/Single Components/BitFlagSystem.cs" id="7_5el6q"]
+[ext_resource type="Script" path="res://Data/Scripts/Poly/PolyArmStateHandler.cs" id="8_g37kx"]
+
+[sub_resource type="Resource" id="Resource_5jk0s"]
+script = ExtResource("4_u0ege")
+xLimits = Vector2(-10, 10)
+yLimits = Vector2(50, 30)
+Offset = 0.0
+
+[sub_resource type="Resource" id="Resource_tk5hy"]
+script = ExtResource("4_u0ege")
+xLimits = Vector2(-10, 10)
+yLimits = Vector2(50, 30)
+Offset = 3.155
+
+[node name="Pawn" instance=ExtResource("1_0qeqv")]
+
+[node name="UI" parent="." index="0"]
+texture_filter = 1
+
+[node name="Right Arm" type="SubViewportContainer" parent="UI" index="1"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PolyArmSubViewport" parent="UI/Right Arm" index="0" instance=ExtResource("2_anlu3")]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Left Arm" type="SubViewportContainer" parent="UI" index="2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PolyArmSubViewport2" parent="UI/Left Arm" index="0" instance=ExtResource("2_anlu3")]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="ArmSprite" parent="UI/Left Arm/PolyArmSubViewport2" index="0"]
+position = Vector2(-10, 10)
+flip_h = true
+
+[node name="ArmUIMovementControl" type="Node" parent="." index="4" node_paths=PackedStringArray("Body", "LeftArm", "RightArm")]
+script = ExtResource("3_5q7kc")
+Parameters = ExtResource("4_k3p4j")
+Body = NodePath("../Body")
+LeftArm = NodePath("../UI/Left Arm/PolyArmSubViewport2/ArmSprite")
+RightArm = NodePath("../UI/Right Arm/PolyArmSubViewport/ArmSprite")
+LeftArmData = SubResource("Resource_5jk0s")
+RightArmData = SubResource("Resource_tk5hy")
+Speed = 0.2
+
+[node name="ArmAttackControl" type="Node" parent="." index="5" node_paths=PackedStringArray("Camera", "LeftArmUI", "LeftArmWorld", "RightArmUI", "RightArmWorld")]
+script = ExtResource("6_lk36t")
+Camera = NodePath("../Body/Horizontal View/Vertical View/Camera Mount")
+LeftArmUI = NodePath("../UI/Left Arm")
+LeftArmWorld = NodePath("../LeftArmWorld")
+RightArmUI = NodePath("../UI/Right Arm")
+RightArmWorld = NodePath("../RightArmWorld")
+ArmSpeed = 5.0
+MaxDistance = 5.0
+ArmReturnTime = 2.0
+
+[node name="FlagSystem" type="Node" parent="." index="6"]
+script = ExtResource("7_5el6q")
+
+[node name="LeftArmReturn" type="Node3D" parent="Body/Horizontal View/Vertical View/Camera Mount" index="0"]
+script = ExtResource("8_g37kx")
+
+[node name="RightArmReturn" type="Node3D" parent="Body/Horizontal View/Vertical View/Camera Mount" index="1"]
+script = ExtResource("8_g37kx")
+
+[node name="BodyTransformPass" type="RemoteTransform3D" parent="Body/Horizontal View" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.611, 0)
+remote_path = NodePath("../../../PolyModelShadowCaster")
+update_rotation = false
+update_scale = false
+
+[node name="PolyModelShadowCaster" type="MeshInstance3D" parent="." index="9"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.9, 0)
+cast_shadow = 3
+mesh = ExtResource("2_yk0cc")
+skeleton = NodePath("../Interpolated Camera/Arm/Arm Anchor/Camera")
+
+[node name="RightArmWorld" parent="." index="10" instance=ExtResource("2_4jiit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.3, 0)
+visible = false
+
+[node name="TopPoint" parent="RightArmWorld/Visual" index="0"]
+cast_shadow = 0
+
+[node name="Body" parent="RightArmWorld/Visual" index="1"]
+cast_shadow = 0
+
+[node name="BottomPoint" parent="RightArmWorld/Visual" index="2"]
+cast_shadow = 0
+
+[node name="Node" type="Node" parent="RightArmWorld" index="1"]
+
+[node name="RightArmShadowCaster" parent="RightArmWorld/Node" index="0" instance=ExtResource("2_4jiit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.3, 0)
+top_level = true
+
+[node name="TopPoint" parent="RightArmWorld/Node/RightArmShadowCaster/Visual" index="0"]
+cast_shadow = 3
+extra_cull_margin = 3.0
+
+[node name="Body" parent="RightArmWorld/Node/RightArmShadowCaster/Visual" index="1"]
+cast_shadow = 3
+extra_cull_margin = 3.0
+
+[node name="BottomPoint" parent="RightArmWorld/Node/RightArmShadowCaster/Visual" index="2"]
+cast_shadow = 3
+extra_cull_margin = 3.0
+
+[node name="LeftArmWorld" parent="." index="11" instance=ExtResource("2_4jiit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.3, 0)
+visible = false
+
+[node name="TopPoint" parent="LeftArmWorld/Visual" index="0"]
+cast_shadow = 0
+
+[node name="Body" parent="LeftArmWorld/Visual" index="1"]
+cast_shadow = 0
+
+[node name="BottomPoint" parent="LeftArmWorld/Visual" index="2"]
+cast_shadow = 0
+
+[node name="Node" type="Node" parent="LeftArmWorld" index="1"]
+
+[node name="LeftArmShadowCaster" parent="LeftArmWorld/Node" index="0" instance=ExtResource("2_4jiit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.3, 0)
+
+[node name="TopPoint" parent="LeftArmWorld/Node/LeftArmShadowCaster/Visual" index="0"]
+cast_shadow = 3
+extra_cull_margin = 3.0
+
+[node name="Body" parent="LeftArmWorld/Node/LeftArmShadowCaster/Visual" index="1"]
+cast_shadow = 3
+extra_cull_margin = 3.0
+
+[node name="BottomPoint" parent="LeftArmWorld/Node/LeftArmShadowCaster/Visual" index="2"]
+cast_shadow = 3
+extra_cull_margin = 3.0
+
+[editable path="UI/Right Arm/PolyArmSubViewport"]
+[editable path="UI/Left Arm/PolyArmSubViewport2"]
+[editable path="RightArmWorld"]
+[editable path="RightArmWorld/Node/RightArmShadowCaster"]
+[editable path="LeftArmWorld"]
+[editable path="LeftArmWorld/Node/LeftArmShadowCaster"]

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk0dupiuj41gd"]
+
+[ext_resource type="Script" path="res://Data/Scripts/Game/SceneLoader.cs" id="1_bvfqq"]
+[ext_resource type="PackedScene" uid="uid://bavi2pyc26x63" path="res://Data/Levels/Tutorial.tscn" id="2_3mf60"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_bvfqq")
+firstScene = ExtResource("2_3mf60")

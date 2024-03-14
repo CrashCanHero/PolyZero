@@ -80,6 +80,19 @@ public partial class BitFlagSystem : Node {
 
         return flags;
     }
+
+    public override string ToString() {
+        string output = "";
+        uint flag = Flags;
+        uint mask = (uint)BitRegion32.Bit1;
+
+        for (int i = 0; i < sizeof(uint) * 8; i++) {
+            uint val = Flags & mask;
+            output += val.ToString();
+            flag>>=1;
+        }
+        return output;
+    }
 }
 
 [Flags]

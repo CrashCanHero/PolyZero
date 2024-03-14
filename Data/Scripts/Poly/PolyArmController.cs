@@ -9,12 +9,21 @@ public partial class PolyArmController : Node {
     [Export]
     public CharacterBody3D Body;
 
+    [Export]
+    public PolyAttackController AttackController;
+
     [ExportGroup("Default")]
     [Export]
-    public Sprite2D LeftArm, RightArm;
+    public Sprite2D LeftArm;
 
     [Export]
-    public PolyArmMovementData LeftArmData, RightArmData;
+    public Sprite2D RightArm;
+
+    [Export]
+    public PolyArmMovementData LeftArmData;
+
+    [Export]
+    public PolyArmMovementData RightArmData;
 
     [Export]
     public float Speed;
@@ -74,7 +83,7 @@ public partial class PolyArmController : Node {
         LeftArm.Position = new Vector2(
             Mathf.Lerp(positions[0].X, positions[1].X, pos.X),
             Mathf.Lerp(positions[0].Y, positions[1].Y, pos.Y)
-        );
+        ) + (Vector2.Down * AttackController.LeftTime.Clamp(0f, float.MaxValue) * 80f);
 
         positions = RightArmData.ConstructLimits();
         pos = GetMovementPosition(RightArmData.Offset) * Scale;
@@ -82,7 +91,7 @@ public partial class PolyArmController : Node {
         RightArm.Position = new Vector2(
             Mathf.Lerp(positions[0].X, positions[1].X, pos.X),
             Mathf.Lerp(positions[0].Y, positions[1].Y, pos.Y)
-        );
+        ) + (Vector2.Down * AttackController.RightTime.Clamp(0f, float.MaxValue) * 80f);
         #endregion
     }   
 }

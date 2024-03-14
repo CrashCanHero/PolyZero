@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://7oosx15q4o68"]
+
+[ext_resource type="Script" path="res://Junker/3D/Mods/Area/StartDialogue.cs" id="1_de17i"]
+[ext_resource type="Script" path="res://addons/aravox/aravox_controller.gd" id="1_i1dgp"]
+[ext_resource type="Theme" uid="uid://c80mjknpwr1gn" path="res://Data/Themes/DefaultTheme.tres" id="2_0u6jo"]
+
+[node name="StartDialogue" type="Node" node_paths=PackedStringArray("TextBox", "AravoxController")]
+script = ExtResource("1_de17i")
+TextBox = NodePath("AraVoxController/Panel/Label")
+AravoxController = NodePath("AraVoxController")
+
+[node name="AraVoxController" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i1dgp")
+dialogue_file = "res://TestDialogue.txt"
+
+[node name="Panel" type="Panel" parent="AraVoxController"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -49.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="AraVoxController/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_0u6jo")
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 2

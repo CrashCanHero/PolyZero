@@ -1,0 +1,10 @@
+[gd_resource type="FastNoiseLite" format=3 uid="uid://bmd8vkfnx45aw"]
+
+[resource]
+fractal_lacunarity = 2.615
+domain_warp_enabled = true
+domain_warp_amplitude = 500.0
+domain_warp_frequency = 0.001
+domain_warp_fractal_octaves = 2
+domain_warp_fractal_lacunarity = 3.765
+domain_warp_fractal_gain = 1.4

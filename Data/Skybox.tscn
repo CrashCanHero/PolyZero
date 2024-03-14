@@ -15,7 +15,6 @@ background_mode = 2
 sky = SubResource("Sky_xjc0r")
 fog_light_color = Color(0.890196, 0.901961, 0.917647, 1)
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.325
 volumetric_fog_length = 30.0
 
 [sub_resource type="Gradient" id="Gradient_pxrx3"]

@@ -3,6 +3,7 @@ class_name GoldGdt_Controls extends Node
 
 @export_group("Components")
 @export var Parameters : PlayerParameters
+@export var Pawn : GoldGdt_Pawn
 @export var Body : GoldGdt_Body
 @export var Move : GoldGdt_Move
 @export var View : GoldGdt_View
@@ -19,7 +20,6 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Capture the mouse.
 
 func _input(event) -> void:
-	
 	#---------------------
 	# Replace with your own implementation of MOUSE_MODE switching!!
 	#---------------------
@@ -53,6 +53,9 @@ func _physics_process(delta) -> void:
 	_act_on_input()
 
 func _gather_mouse_input(event: InputEventMouseMotion) -> void:
+	if !Pawn.CanControl:
+		move_dir = Vector3.ZERO
+		return
 	# Deform the mouse input to make it viewport size independent.
 	var viewport_transform := get_tree().root.get_final_transform()
 	mouse_input += event.xformed_by(viewport_transform).relative
@@ -67,6 +70,10 @@ func _gather_mouse_input(event: InputEventMouseMotion) -> void:
 	View._handle_camera_input(mouse_input)
 
 func _gather_input() -> void:
+	if !Pawn.CanControl:
+		movement_input = Vector2.ZERO
+		move_dir = Vector3.ZERO
+		return
 	# Get input strength on the horizontal axes.
 	var ix = Input.get_action_raw_strength("pm_moveright") - Input.get_action_raw_strength("pm_moveleft")
 	var iy = Input.get_action_raw_strength("pm_movebackward") - Input.get_action_raw_strength("pm_moveforward")

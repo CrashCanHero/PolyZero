@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c3ts3v7s7bt1g"
+path="res://.godot/imported/Gobbo.obj-a9896f6954393260b03cf4e1f8287adc.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Gobbo.obj-a9896f6954393260b03cf4e1f8287adc.mesh"]
+
+source_file="res://Data/Models/Gobbo/Gobbo.obj"
+dest_files=["res://.godot/imported/Gobbo.obj-a9896f6954393260b03cf4e1f8287adc.mesh", "res://.godot/imported/Gobbo.obj-a9896f6954393260b03cf4e1f8287adc.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

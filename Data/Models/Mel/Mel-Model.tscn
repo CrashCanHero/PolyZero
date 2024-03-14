@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://m41ih8lukwfx"]
+
+[ext_resource type="Texture2D" uid="uid://dlwx3orttmdtg" path="res://Data/Models/Mel/Mel-A.png" id="1_nucni"]
+[ext_resource type="ArrayMesh" uid="uid://8aiwabfx1n7x" path="res://Data/Models/Mel/Mel.obj" id="2_n8r65"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wm4id"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 2
+specular_mode = 2
+albedo_texture = ExtResource("1_nucni")
+texture_filter = 0
+
+[node name="Mel-Model" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_wm4id")
+mesh = ExtResource("2_n8r65")

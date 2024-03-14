@@ -5,6 +5,9 @@ class_name GoldGdt_Pawn extends Node3D
 @export var View : GoldGdt_View
 @export var Camera : GoldGdt_Camera
 
+@export_group("Cutscene")
+@export var CanControl : bool = true
+
 @export_group("On Ready")
 @export_range(-89, 89) var start_view_pitch : float = 0 ## How the vertical view of the pawn should be rotated on ready. The default value is 0.
 @export var start_view_yaw : float = 0 ## How the horizontal view of the pawn should be rotated on ready. The default values is 0.

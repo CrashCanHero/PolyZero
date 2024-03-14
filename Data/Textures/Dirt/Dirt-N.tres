@@ -1,0 +1,8 @@
+[gd_resource type="NoiseTexture2D" load_steps=2 format=3 uid="uid://b7658dykw825t"]
+
+[ext_resource type="FastNoiseLite" uid="uid://bmd8vkfnx45aw" path="res://Data/Textures/Dirt/DirtNoise.tres" id="1_erkc5"]
+
+[resource]
+seamless = true
+as_normal_map = true
+noise = ExtResource("1_erkc5")

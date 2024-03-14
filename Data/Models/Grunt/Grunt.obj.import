@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c540go5hgfkju"
+path="res://.godot/imported/Grunt.obj-d3c2b904afded0d7188bacb3a5eb5b8e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Grunt.obj-d3c2b904afded0d7188bacb3a5eb5b8e.mesh"]
+
+source_file="res://Data/Models/Grunt/Grunt.obj"
+dest_files=["res://.godot/imported/Grunt.obj-d3c2b904afded0d7188bacb3a5eb5b8e.mesh", "res://.godot/imported/Grunt.obj-d3c2b904afded0d7188bacb3a5eb5b8e.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

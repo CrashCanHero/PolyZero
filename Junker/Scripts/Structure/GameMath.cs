@@ -11,7 +11,7 @@ public static partial class GameMath {
 
     public static Vector2 ConvertTo2D(this Vector3 pos) => new Vector2(pos.X, pos.Z);
 
-    public static Vector3 ConvertTo3D(this Vector2 pos, float zPos = 0f) => new Vector3(pos.X, pos.Y, zPos);
+    public static Vector3 ConvertTo3D(this Vector2 pos, float yPos = 0f) => new Vector3(pos.X, yPos, pos.Y);
 
     public static float RoundToDirection(this float Input, int angleCount) => Input.RoundToAngle(360f / angleCount);
 

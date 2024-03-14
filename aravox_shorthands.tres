@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bgmfm3uctbq72"]
+
+[ext_resource type="Script" path="res://addons/aravox/aravox_shorthands.gd" id="1_3cw2l"]
+
+[resource]
+script = ExtResource("1_3cw2l")
+shorthands = {}

@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://b75cxheapmp84"]
+
+[ext_resource type="Shader" uid="uid://u4w5nyy7ohgj" path="res://Shaders/NoiseColor.tres" id="1_oi7ck"]
+[ext_resource type="Texture2D" uid="uid://bdh3r3hnipj1h" path="res://Data/Textures/Dirt/Dirt-A.tres" id="2_ik12c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shgho"]
+render_priority = 0
+shader = ExtResource("1_oi7ck")
+shader_parameter/Color1 = Color(0.223529, 0.152941, 0.0156863, 1)
+shader_parameter/World_Scale = 1.0
+shader_parameter/UV_Scale = Vector2(3, 3)
+shader_parameter/Color2 = Color(0.176471, 0.0941176, 0.00784314, 1)
+shader_parameter/Noise_Tex = ExtResource("2_ik12c")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47ppv"]
+albedo_color = Color(0.227451, 0.227451, 0.227451, 1)
+metallic = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pw6xh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k4rew"]
+size = Vector3(1, 0.6, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nau73"]
+size = Vector3(1, 0.6, 7)
+
+[node name="MonkeyBar" type="Node3D"]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.871565, 0, -0.49028, -0.49028, -4.37114e-08, -0.871565, -2.14308e-08, 1, -3.80973e-08, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_shgho")
+sides = 6
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.0111878, 0, -0.999937, -0.999937, -4.37114e-08, -0.0111878, -4.37055e-08, 1, -4.87471e-10, 0.0332373, -3.18634, -0.00103762)
+material_override = SubResource("StandardMaterial3D_47ppv")
+size = Vector3(7, 5, 0.6)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, -3.55271e-15, -9.31323e-10, -2.8777e-13, 1, -1.81133e-13, 9.31323e-10, 5.55112e-17, 1, 2.1, -1.08115e-07, -0.0500001)
+operation = 2
+size = Vector3(10, 3.8, 1.3)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_pw6xh")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_k4rew")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -3.2, -2.2)
+shape = SubResource("BoxShape3D_nau73")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -3.2, 2.2)
+shape = SubResource("BoxShape3D_nau73")

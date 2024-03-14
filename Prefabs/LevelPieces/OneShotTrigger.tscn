@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://byborq7g0my31"]
+
+[ext_resource type="Script" path="res://Junker/3D/Mods/Area/AutoDestroy.cs" id="1_vjet0"]
+
+[node name="OneShotTrigger" type="Area3D"]
+
+[node name="AutoDestroy" type="Node" parent="."]
+script = ExtResource("1_vjet0")
