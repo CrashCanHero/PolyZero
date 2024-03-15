@@ -16,6 +16,7 @@ public partial class PolyUIPointerControl : Node {
         base._Ready();
 
         pos = Pointer.Position;
+        GD.Print(pos);
     }
 
     public override void _Process(double delta) {
@@ -24,21 +25,21 @@ public partial class PolyUIPointerControl : Node {
         bool swing = SwingDetector.IsColliding();
         bool enemy = EnemyDetector.IsColliding();
 
+        Vector3 position = pos;
+
         if (!swing && !enemy) {
             Pointer.Position = pos;
             Pointer.Modulate = new Color(Colors.White, 1f);
             return;
         }
 
-        Vector3 position = pos;
-
         if (swing) {
-            pos = SwingDetector.GetCollisionPoint(0);
+            position = SwingDetector.GetCollisionPoint(0);
             Pointer.Modulate = new Color(Colors.White, 1f);
         }
 
         if (enemy) {
-            pos = EnemyDetector.GetCollisionPoint(0);
+            position = EnemyDetector.GetCollisionPoint(0);
             Pointer.Modulate = new Color(Colors.Red, 1f);
         }
 

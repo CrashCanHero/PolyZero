@@ -7,6 +7,9 @@ public partial class SceneLoader : Node {
     [Export]
     public PackedScene firstScene;
 
+    [Export]
+    public PackedScene[] Scenes;
+
     Node LoadedScene;
 
     public override void _Ready() {
@@ -29,4 +32,7 @@ public partial class SceneLoader : Node {
         AddChild(scene);
         LoadedScene = scene;
     }
+
+    
+    public void LoadSceneIndex(int index) => LoadScene(Scenes[index].Instantiate());
 }

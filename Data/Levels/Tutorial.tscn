@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bavi2pyc26x63"]
+[gd_scene load_steps=46 format=3 uid="uid://bavi2pyc26x63"]
 
 [ext_resource type="Shader" uid="uid://u4w5nyy7ohgj" path="res://Shaders/NoiseColor.tres" id="1_1h71q"]
 [ext_resource type="Texture2D" uid="uid://bdh3r3hnipj1h" path="res://Data/Textures/Dirt/Dirt-A.tres" id="2_7tcq1"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://byborq7g0my31" path="res://Prefabs/LevelPieces/OneShotTrigger.tscn" id="7_w54qd"]
 [ext_resource type="PackedScene" uid="uid://7oosx15q4o68" path="res://Prefabs/LevelPieces/StartDialogueMod.tscn" id="8_swi7q"]
 [ext_resource type="PackedScene" uid="uid://dfs6ewdtpdret" path="res://Prefabs/Entities/Enemies/Mel.tscn" id="9_0kdyj"]
+[ext_resource type="Script" path="res://Junker/3D/Mods/Area/EndDialogueEvent.cs" id="9_thjxi"]
+[ext_resource type="PackedScene" uid="uid://dnjvho2l7t7c7" path="res://Data/SnowParticles.tscn" id="13_q408u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jwvnc"]
 render_priority = 0
@@ -122,6 +124,19 @@ size = Vector3(42.1196, 6.11761, 14.9414)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s2vs2"]
 size = Vector3(5, 3, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gkea1"]
+size = Vector3(9, 3, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vsq45"]
+size = Vector3(2.79102, 3, 0.82959)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_r087w"]
+height = 0.8
+radius = 17.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6hh4y"]
+size = Vector3(3.4, 4, 0.799805)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8im51"]
 size = Vector3(2.5, 0.527246, 1)
@@ -882,6 +897,80 @@ shape = SubResource("BoxShape3D_s2vs2")
 
 [node name="AraVoxController" parent="StartingArea/Dialogue/Setup2Trigger/Setup2" index="0"]
 dialogue_file = "res://Data/Dialogue/Setup2.txt"
+
+[node name="PostJumpTrigger" parent="StartingArea/Dialogue" instance=ExtResource("7_w54qd")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 9.75, 0, -22)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartingArea/Dialogue/PostJumpTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.318878, 1, 1.42363)
+shape = SubResource("BoxShape3D_s2vs2")
+
+[node name="Setup2" parent="StartingArea/Dialogue/PostJumpTrigger" instance=ExtResource("8_swi7q")]
+
+[node name="AraVoxController" parent="StartingArea/Dialogue/PostJumpTrigger/Setup2" index="0"]
+dialogue_file = "res://Data/Dialogue/PostJump.txt"
+
+[node name="LackOfGoboTrigger" parent="StartingArea/Dialogue" instance=ExtResource("7_w54qd")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 10.25, 0, -41.75)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartingArea/Dialogue/LackOfGoboTrigger"]
+transform = Transform3D(0.962248, 0, 0.27218, 0, 1, 0, -0.27218, 0, 0.962248, -9.53674e-07, 1, -1.25)
+shape = SubResource("BoxShape3D_gkea1")
+
+[node name="Setup2" parent="StartingArea/Dialogue/LackOfGoboTrigger" instance=ExtResource("8_swi7q")]
+
+[node name="AraVoxController" parent="StartingArea/Dialogue/LackOfGoboTrigger/Setup2" index="0"]
+dialogue_file = "res://Data/Dialogue/LackOfGoboExplain.txt"
+
+[node name="PlaygroundFindTrigger" parent="StartingArea/Dialogue" instance=ExtResource("7_w54qd")]
+transform = Transform3D(0.977545, 0, 0.210728, 0, 1, 0, -0.210728, 0, 0.977545, 8.25, 0, -52.5)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartingArea/Dialogue/PlaygroundFindTrigger"]
+transform = Transform3D(0.962248, 0, 0.27218, 0, 1, 0, -0.27218, 0, 0.962248, -0.7085, 1, -1.74908)
+shape = SubResource("BoxShape3D_vsq45")
+
+[node name="Setup2" parent="StartingArea/Dialogue/PlaygroundFindTrigger" instance=ExtResource("8_swi7q")]
+
+[node name="AraVoxController" parent="StartingArea/Dialogue/PlaygroundFindTrigger/Setup2" index="0"]
+dialogue_file = "res://Data/Dialogue/PlaygroundFind.txt"
+
+[node name="PlaygroundFallTrigger" parent="StartingArea/Dialogue" instance=ExtResource("7_w54qd")]
+transform = Transform3D(0.977545, 0, 0.210728, 0, 1, 0, -0.210728, 0, 0.977545, 2.75, 0, -61.75)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartingArea/Dialogue/PlaygroundFallTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4585, -6.25, -2.83166)
+shape = SubResource("CylinderShape3D_r087w")
+
+[node name="Setup2" parent="StartingArea/Dialogue/PlaygroundFallTrigger" instance=ExtResource("8_swi7q")]
+
+[node name="AraVoxController" parent="StartingArea/Dialogue/PlaygroundFallTrigger/Setup2" index="0"]
+dialogue_file = "res://Data/Dialogue/PlaygroundFall.txt"
+
+[node name="End" parent="StartingArea/Dialogue" instance=ExtResource("7_w54qd")]
+transform = Transform3D(0.977545, 0, 0.210728, 0, 1, 0, -0.210728, 0, 0.977545, 2.75, 0, -61.75)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartingArea/Dialogue/End"]
+transform = Transform3D(0.866024, 0, -0.499999, 0, 1, 0, 0.499999, 0, 0.866024, 5.20358, -4.75, -15.4059)
+shape = SubResource("BoxShape3D_6hh4y")
+
+[node name="Setup2" parent="StartingArea/Dialogue/End" instance=ExtResource("8_swi7q")]
+
+[node name="AraVoxController" parent="StartingArea/Dialogue/End/Setup2" index="0"]
+dialogue_file = "res://Data/Dialogue/End.txt"
+
+[node name="EndEvent" type="Node" parent="StartingArea/Dialogue/End/Setup2" node_paths=PackedStringArray("Dialogue")]
+script = ExtResource("9_thjxi")
+Dialogue = NodePath("..")
 
 [node name="Playground" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -258)
@@ -1733,5 +1822,25 @@ transform = Transform3D(1, 0, 0, 0, 0.244461, 0.969659, 0, -0.969659, 0.244461, 
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("7_oacgb")]
 
+[node name="GPUParticles3D" parent="." instance=ExtResource("13_q408u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
+
+[node name="GPUParticles3D4" parent="." instance=ExtResource("13_q408u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.51512, 42.0952, -51.4358)
+
+[node name="GPUParticles3D2" parent="." instance=ExtResource("13_q408u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.47, 13, -154.563)
+
+[node name="GPUParticles3D3" parent="." instance=ExtResource("13_q408u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.62, 0.221886, -257.117)
+
+[node name="GPUParticles3D5" parent="." instance=ExtResource("13_q408u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8345, 10.4178, -256.707)
+
 [editable path="StartingArea/Dialogue/Setup1Trigger/Setup1"]
 [editable path="StartingArea/Dialogue/Setup2Trigger/Setup2"]
+[editable path="StartingArea/Dialogue/PostJumpTrigger/Setup2"]
+[editable path="StartingArea/Dialogue/LackOfGoboTrigger/Setup2"]
+[editable path="StartingArea/Dialogue/PlaygroundFindTrigger/Setup2"]
+[editable path="StartingArea/Dialogue/PlaygroundFallTrigger/Setup2"]
+[editable path="StartingArea/Dialogue/End/Setup2"]

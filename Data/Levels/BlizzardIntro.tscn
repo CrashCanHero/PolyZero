@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://pkvqtppnhfch"]
+[gd_scene load_steps=55 format=3 uid="uid://pkvqtppnhfch"]
 
 [ext_resource type="Script" path="res://Data/Scripts/Game/PolyIntroHandler.cs" id="1_1nafg"]
 [ext_resource type="Texture2D" uid="uid://bok08os2847l" path="res://Data/Textures/Snow/Snow-A.tres" id="1_mcv0v"]
@@ -11,7 +11,9 @@
 [ext_resource type="Script" path="res://Data/Scripts/Game/AutoPathFollower3D.cs" id="10_c05go"]
 [ext_resource type="Theme" uid="uid://c80mjknpwr1gn" path="res://Data/Themes/DefaultTheme.tres" id="12_7bw8p"]
 [ext_resource type="PackedScene" uid="uid://c8mmmqw3xhhlo" path="res://Prefabs/Paths/PathBase.tscn" id="12_h6fh0"]
+[ext_resource type="Script" path="res://Data/Scripts/Game/Menu.cs" id="12_o64w3"]
 [ext_resource type="Shader" uid="uid://inmtl5m8nkk7" path="res://Shaders/SnowPathwayOverlay.tres" id="13_pneof"]
+[ext_resource type="PackedScene" uid="uid://dnjvho2l7t7c7" path="res://Data/SnowParticles.tscn" id="14_6r7t8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yb7ol"]
 specular_mode = 2
@@ -226,9 +228,9 @@ point_count = 7
 [node name="Logic" type="Node" parent="." node_paths=PackedStringArray("PathFollower", "UI", "PlayButton", "QuitButton")]
 script = ExtResource("1_1nafg")
 PathFollower = NodePath("../Path3D/PathFollow3D")
-UI = NodePath("../Control")
-PlayButton = NodePath("../Control/Play")
-QuitButton = NodePath("../Control/Quit")
+UI = NodePath("../Menu")
+PlayButton = NodePath("../Menu/Play")
+QuitButton = NodePath("../Menu/Quit")
 
 [node name="Visual" type="Node" parent="."]
 
@@ -383,7 +385,7 @@ PerSecond = true
 
 [node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D"]
 
-[node name="Control" type="Control" parent="."]
+[node name="Menu" type="Control" parent="."]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -391,8 +393,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("12_o64w3")
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="Menu"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -403,10 +406,10 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme = ExtResource("12_7bw8p")
 theme_override_font_sizes/font_size = 40
-text = "P0ly"
+text = "P0ly Zer0"
 horizontal_alignment = 1
 
-[node name="Play" type="Button" parent="Control"]
+[node name="Play" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(50, 10)
 layout_mode = 1
 anchors_preset = 8
@@ -424,7 +427,26 @@ theme = ExtResource("12_7bw8p")
 theme_override_font_sizes/font_size = 20
 text = "Play"
 
-[node name="Quit" type="Button" parent="Control"]
+[node name="Secret" type="Button" parent="Menu"]
+visible = false
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 33.5
+offset_top = -16.5
+offset_right = 105.5
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("12_7bw8p")
+theme_override_font_sizes/font_size = 20
+text = "Secret"
+
+[node name="Quit" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(50, 10)
 layout_mode = 1
 anchors_preset = 7
@@ -441,3 +463,14 @@ grow_vertical = 0
 theme = ExtResource("12_7bw8p")
 theme_override_font_sizes/font_size = 20
 text = "Quit"
+
+[node name="GPUParticles3D" parent="." instance=ExtResource("14_6r7t8")]
+
+[node name="GPUParticles3D2" parent="." instance=ExtResource("14_6r7t8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87, 10, 101)
+
+[node name="GPUParticles3D3" parent="." instance=ExtResource("14_6r7t8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -126, 10, -103)
+
+[connection signal="pressed" from="Menu/Play" to="Menu" method="PlayClicked"]
+[connection signal="pressed" from="Menu/Quit" to="Menu" method="QuitClicked"]

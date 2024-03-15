@@ -47,6 +47,7 @@ public partial class PolySwingController : Node {
     Vector3 leftNormCache, rightNormCache;
 
     public bool RequestArmThrow(PolyArmStateHandler arm, Node3D pivot) {
+        GD.Print(hasTarget, arm.Active);
         if (!hasTarget || arm.Active) {
             return false;
         }
